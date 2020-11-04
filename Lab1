@@ -1,0 +1,14 @@
+/** Namespace for Orderapp
+*Orderapp\index.php
+*OrderApp\Controller\IndexController
+*OrderApp\Core\Service\Services
+*/
+/** Autoloading initiation
+*spl_autoload_register
+*spl_autoload_register(
+*    function ($class) {
+*        $file = str_replace('\\', '/', $class) . '.php';
+*        require BASE . '/src/' . $file;
+*    }
+*);
+*/
