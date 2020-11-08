@@ -1,0 +1,51 @@
+<?php
+class waterAssem{
+
+    protected $radius, $diameter;
+
+    public const pmpAssem = 'Wilkins';
+    public function getRad(int $radius){
+        $this->radi = $radius;
+    }
+    public function getdia(int $diameter){
+        $this->dia = $diameter;
+    }
+    public function setSN(){
+        $nCom = ($this->radi).($this->dia);
+        return $nCom;
+    }
+}
+$pump1=new waterAssem();
+$pump1->getdia(2);
+$pump1->getRad(3);
+$pump2=new waterAssem();
+$pump2->getdia(6);
+$pump2->getRad(9);
+
+echo $pump1->setSN();
+
+
+class Meter extends waterAssem{
+    public $serialNum;
+
+    public function getSer(int $serialNum)
+    {
+        $this->serialnum = $serialNum;
+        return $serialNum;
+    }
+
+    public function fullSN()
+    {
+        parent::setSN($nCom);
+        $fullSerial = ($this->setSN()) . ($this->serialnum);
+        return $fullSerial;
+    }
+}
+
+$pump1 = new Meter();
+$pump1->getSer(67658);
+$pump2 = new Meter();
+$pump2->getSer(92378);
+
+echo $pump1->fullSN();
+?>
