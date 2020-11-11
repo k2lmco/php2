@@ -1,0 +1,62 @@
+<?php
+/*
+*Placed in DefaultWorkspace\sandbox\Backflow\
+*Interface to assign resident or commercial
+*/
+
+interface PropertyType {
+        public function getProperty($propertyType) : string;
+        public function setProperty($propertyType) : string;
+}
+
+
+/*
+*In a separate .php file the rest of the code
+*/
+
+<?php
+namespace DefaultWorkspace\sandbox\Backflow;
+use DefaultWorkspace\sandbox\Backflow\propertytype;
+// The superclass to create a Wilkins pump
+class Wilkins implements PropertyType
+{
+    protected $Size, $DiaMeter;
+
+    public function getSizeInfo(int $Size, int $DiaMeter)
+    {
+        $this->size = $Size;
+        $this->diameter = $DiaMeter;
+    }
+    public function setProperty($DiaMeter){
+        if ($DiaMeter < "5") {
+            $propertyType="Resident";
+        }
+        else {
+            $propertyType="Commercial";
+        }
+    }
+
+}
+
+// The subclass creates serial number
+class Serial extends Wilkins
+{
+    public $SerialNumber;
+
+    public function info(int $Size, int $DiaMeter, int $SerialNumber)
+    {
+        parent::setSizeInfo($Size, $DiaMeter);
+        $this->serialnumber = $SerialNumber;
+        return $this->serialnumber;
+    }
+
+    public function setSerial()
+    {
+        $fullSN = "{$this->size} . {$this->diaMeter} . {$this->serialnumber}";
+        return $fullSN;
+    }
+}
+
+$pump1 = new Wilkins();
+$pump1->info(1, 2, 385793);
+echo $pump1->setSerial();
