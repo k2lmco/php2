@@ -1,0 +1,139 @@
+<?php
+//
+define('SRC_CODE_DIR', __DIR__);
+spl_autoload_register(function ($class) {
+    $sep = DIRECTORY_SEPARATOR;
+    $fn = str_replace('\\', $sep, $class);
+    $fn = SRC_CODE_DIR . $sep . $fn . '.php';
+    $fn = str_replace($sep . $sep, $sep, $fn);
+    require_once $fn;
+});
+
+//use Backflow\Attrib;
+//use Backflow\Traits;
+use Backflow\Attrib\Serial;
+
+$pump1 = new Serial();
+$pump1->setInfo(1, 2, 385793);
+$pump1->getPropertyType();
+echo $pump1->getFullSerial();
+
+
+//Interface file
+<?php
+namespace Backflow\Traits;
+/*
+*Placed in DefaultWorkspace\sandbox\Backflow\
+*Interface to assign resident or commercial
+*/
+
+interface Propertytype {
+    public function getPropertyType() : string;
+    public function setPropertyType($propertyType) : void;
+}
+
+
+
+//Class Wilkins file
+<?php
+
+
+namespace Backflow\Attrib;
+
+
+class Wilkins implements PropertyType
+{
+    protected $size, $diaMeter, $propertyType;
+
+    public function setPropertyType($propertyType) : void
+    {
+        $this->propertyType = $propertyType;
+    }
+    public function getPropertyType() : string
+    {
+        return $this->propertyType;
+    }
+    public function setSizeInfo(int $size, int $diaMeter)
+    {
+        $this->size = $size;
+        $this->diaMeter = $diaMeter;
+    }
+    public function redefinePropertyType($diaMeter){
+        if ($diaMeter < "5") {
+            $this->propertyType="Resident";
+        }
+        else {
+            $this->propertyType="Commercial";
+        }
+    }
+    use AddressPhysicalMailing;
+
+}
+
+
+
+
+//Class Serial
+<?php
+
+
+namespace Backflow\Attrib;
+
+
+
+class Serial extends Wilkins
+{
+    public $serialNumber;
+
+    public function setInfo(int $size, int $diaMeter, int $serialNumber)
+    {
+        $this->setSizeInfo($size, $diaMeter);
+        $this->serialNumber = $serialNumber;
+    }
+
+    public function getSerial()
+    {
+        return $this->serialNumber;
+    }
+
+    public function getFullSerial()
+    {
+        return $this->size . $this->diaMeter . $this->serialNumber;
+    }
+}
+
+
+
+
+//Traits
+
+<?php
+trait AddressPhysicalMailing {
+    public $physicalAddress;
+    public function setPhysicalAddress(string $physicalAddress) {
+        $this->physicalAddress = $physicalAddress;
+    }
+    public function getPhysicalAddress() : string {
+        return $this->physicalAddress;
+    }
+}
+
+
+
+//Input address from simulated data
+<?php
+
+
+namespace Backflow\Attrib;
+
+
+class PhysicalAddress
+{
+    //Simulate data coming from server
+    public $physicalAddress = '123 Main St';
+    public function getPhysicalAddress()
+    {
+        return $this->physicalAddress;
+    }
+
+}
