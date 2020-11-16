@@ -1,0 +1,47 @@
+/* did not test this code
+*/
+
+//Without Binding
+
+
+<?php
+try {
+// Get the connection instance
+    $pdo = new PDO('mysql:host=localhost;dbname=phpcourse','vagrant','vagrant');
+// Set error mode attribute
+    $pdo->setAttribute (PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+// Setup a one-off SQL statement and get a statement object
+    $stmt = $pdo->prepare( 'Select firstName,lastName From customers
+                            Where customerid = "984"');
+// Print table
+    $result = $stmt->execute(PDO::FETCH_ASSOC);
+//  Print_r to test
+//    print_r( $result );
+    } catch (PDOException $e){
+//Handle error
+        echo $e->getMessage();
+}
+
+
+//With Binding
+
+<?php
+try {
+// Get the connection instance
+    $pdo = new PDO('mysql:host=localhost;dbname=phpcourse','vagrant','vagrant');
+// Set error mode attribute
+    $pdo->setAttribute (PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+// Setup a one-off SQL statement and get a statement object
+    $stmt = $pdo->prepare( Select firstName,lastName,address From customers
+                            Where customerid="984");
+    $stmt->bindParam(':firstName', $fName, PDO::PARAM_STR, 15);
+    $stmt->bindParam(':lastName', $lName, PDO::PARAM_STR, 15);
+    $stmt->bindParam(':address', $custAddress,PDO::PARAM_STR, 30);
+// Print table
+    $result = $stmt->execute(array($fName,$lName,$custAddress));
+//  Print_r to test
+//    print_r( $result );
+    } catch (PDOException $e){
+//Handle error
+        echo $e->getMessage();
+}
