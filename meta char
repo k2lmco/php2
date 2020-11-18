@@ -1,0 +1,4 @@
+<?php
+$input = 'jono$nojnv@aol.com';
+$pattern = '/^(.+)@(\S+)$/';
+echo preg_match($pattern,$input) ? "MATCH" : "NO MATCH";
